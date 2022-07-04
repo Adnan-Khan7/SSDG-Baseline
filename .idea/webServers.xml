@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="09183956-099b-4c43-9351-bd4d2a32467e" name="sshConfig://adnan.khan@10.127.30.40:22 password/home/adnan.khan/.conda/envs/dino/bin/python">
+        <fileTransfer accessType="SFTP" host="10.127.30.40" port="22" sshConfigId="98dbc508-4f3b-4f40-99ab-673fd341e2af" sshConfig="sshConfig://adnan.khan@10.127.30.40:22 password/home/adnan.khan/.conda/envs/dino/bin/python" />
+      </webServer>
+    </option>
+  </component>
+</project>

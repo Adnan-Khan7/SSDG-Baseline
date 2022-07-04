@@ -10,7 +10,7 @@ from PIL import Image
 from torch.utils.data import DataLoader
 # This is for the progress bar.
 from tqdm.auto import tqdm
-
+# adding comment
 logging.basicConfig(filename=OUTPUT_DIR + 'logs.log', level=logging.INFO,
                     format='%(asctime)s:%(levelname)s:%(message)s')
 print(f"Configuration: \n model:{MODEL_NAME}, SSL Threshold: {THRESH}, Learning Rate: {LR}, Batch Size: {BATCH_SIZE}, Epochs: {EPOCHS}")
