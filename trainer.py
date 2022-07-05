@@ -240,17 +240,17 @@ for epoch in range(TRAIN_EPOCHS):
         # Obtain pseudo-labels for unlabeled data using trained model.
         pseudo_set = get_pseudo_labels(unlabeled_set, model, THRESH)
         if len(pseudo_set) == 0:
-            print(f"No new pseudo labels generated at epoch {epoch}..., \n Continue Supervised Training with labeled "
-                  f"dataset")
-            logging.info(f"No new pseudo labels generated at epoch {epoch}..., \n Continue Supervised Training with "
-                         f"labeled dataset")
+            print(f"No new pseudo labels generated at epoch {epoch + 1}..., \n Continue Supervised Training with "
+                  f"labeled dataset")
+            logging.info(f"No new pseudo labels generated at epoch {epoch + 1}..., \n Continue Supervised Training "
+                         f"with labeled dataset")
             train_loader_labeled = DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=0,
                                               pin_memory=False)
             train_supervised(train_loader_labeled)
         else:
             num_pseudo_labels = len(pseudo_set)
-            print(f"Number of generated pseudo labels at epoch {epoch} are {num_pseudo_labels}")
-            logging.info(f"Number of generated pseudo labels at epoch {epoch} are {num_pseudo_labels}")
+            print(f"Number of generated pseudo labels at epoch {epoch + 1} are {num_pseudo_labels}")
+            logging.info(f"Number of generated pseudo labels at epoch {epoch + 1} are {num_pseudo_labels}")
             concat_dataset = ConcatDataset([train_set, pseudo_set])
             total_train = len(concat_dataset)
             print(f"Number of total training examples are: {total_train}")

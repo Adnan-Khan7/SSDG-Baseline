@@ -9,6 +9,7 @@ from tqdm.auto import tqdm
 logging.basicConfig(filename=OUTPUT_DIR + 'logs.log', level=logging.INFO,
                     format='%(asctime)s:%(levelname)s:%(message)s')
 
+
 class noLabeledDataset(Dataset):
     def __init__(self, imgList, labelList):
         n = len(imgList)
@@ -29,8 +30,9 @@ class noLabeledDataset(Dataset):
 
 def get_pseudo_labels(dataset, model, threshold):
     # This functions generates pseudo-labels of a dataset using given model.
+    print(f"Generating pseudo labels for next epoch...")
+    logging.info(f"Generating pseudo labels for next epoch...")
     device = "cuda" if torch.cuda.is_available() else "cpu"
-
 
     # Construct a data loader.
     data_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False)
@@ -63,12 +65,60 @@ def get_pseudo_labels(dataset, model, threshold):
 
         imgList.append(img[score_filter])
         labelList.append(class_list)
-    dataset = noLabeledDataset(imgList, labelList)
+    dataset2 = noLabeledDataset(imgList, labelList)
+    total_p_labels = len(dataset2)
+    #####################################################################################
+    # Validation of generated psuedo labels
+    # model.eval()
+    valid_pseudo_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0,
+                                     pin_memory=False)
+    # # These are used to record information in validation.
+    valid_loss = []
+    valid_corr = []
+    predictions_valid = []
+    criterion = nn.CrossEntropyLoss()
+    #
+    # # Iterate the validation set by batches.
+    for batch in tqdm(valid_pseudo_loader):
+        # A batch consists of image data and corresponding labels.
+        imgs, labels = batch
+
+        # We don't need gradient in validation.
+        # Using torch.no_grad() accelerates the forward process.
+        with torch.no_grad():
+            logits = model(imgs.to(device))
+
+        # We can still compute the loss (but not the gradient).
+        loss = criterion(logits, labels.to(device))
+
+        # Compute the accuracy for current batch.
+        n_corr = sum((logits.argmax(dim=-1) == labels.to(device)))
+        valid_corr.append(n_corr)
+        # Take the class with greatest logit as prediction and record it.
+        predictions_valid.extend(logits.argmax(dim=-1).cpu().numpy().tolist())
+
+        # Record the loss and accuracy.
+        valid_loss.append(loss.item())
+
+    # The average loss and accuracy for entire validation set is the average of the recorded values.
+    valid_loss = sum(valid_loss) / len(valid_loss)
+    valid_acc = sum(valid_corr) / len(predictions_valid)
+    # Print the information.
+    print(f"[ Pseudo label eval | loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
+    logging.info(f"[ Pseudo label eval | loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
+    total_correct = len(valid_corr)
+    print(f"Number of correct predications on unlabeled dataset: {total_correct}")
+    logging.info(f"Number of correct predications on unlabeled dataset: {total_correct}")
+    print(f"Number of total generated pseudo labels: {total_p_labels}")
+    logging.info(f"Number of total generated pseudo labels: {total_p_labels}")
+    print(f"Psuedo Labels accuracy: {total_correct} / {total_p_labels} =  {total_correct / total_p_labels}")
+    logging.info(f"Psuedo Labels accuracy: {total_correct} / {total_p_labels} =  {total_correct / total_p_labels}")
+
+    ######################################################################################
+
     del imgList
     del labelList
     del data_loader
     # # Turn off the eval mode.
     model.train()
-    print(f"Generating pseudo labels for next epoch...")
-    logging.info(f"Generating pseudo labels for next epoch...")
-    return dataset
+    return dataset2

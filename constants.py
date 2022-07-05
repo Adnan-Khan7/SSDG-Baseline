@@ -5,7 +5,7 @@ MODEL_NAME = "resnet50"
 NUM_CLASSES = 7
 
 # Threshold for the ssl
-THRESH = 0.6
+THRESH = 0.7
 
 # Learning rate
 
@@ -17,7 +17,7 @@ BATCH_SIZE = 32
 TRAIN_EPOCHS = 60
 
 # Epochs for initial supervised training, should be less than TRAIN_EPOCHS
-SUPERVISED_EPOCHS = 10
+SUPERVISED_EPOCHS = 15
 
 # Boolean whether to do Semi-Supervised Training or not
 DO_SEMI = True
@@ -36,7 +36,7 @@ DATA_TEST_SET = "/home/adnan.khan/Desktop/ssl_vit/pacs_dataset/pacs_art_target_u
 IMG_EXTENSIONS = (".jpg", ".jpeg", ".png")
 
 # Directory for logs to save
-OUTPUT_DIR = "/home/adnan.khan/Desktop/SSDG_Baseline/outputs/exp5/"
+OUTPUT_DIR = "/home/adnan.khan/Desktop/SSDG_Baseline/outputs/exp6/"
 
 # Save model at specific epoch
 SAVE_EPOCH = 59
