@@ -248,9 +248,6 @@ for epoch in range(TRAIN_EPOCHS):
                                               pin_memory=False)
             train_supervised(train_loader_labeled)
         else:
-            num_pseudo_labels = len(pseudo_set)
-            print(f"Number of generated pseudo labels at epoch {epoch + 1} are {num_pseudo_labels}")
-            logging.info(f"Number of generated pseudo labels at epoch {epoch + 1} are {num_pseudo_labels}")
             concat_dataset = ConcatDataset([train_set, pseudo_set])
             total_train = len(concat_dataset)
             print(f"Number of total training examples are: {total_train}")

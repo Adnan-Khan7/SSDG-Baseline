@@ -11,13 +11,13 @@ THRESH = 0.6
 
 LR = 0.00005
 # Batch size for training, validation, and testing.
-BATCH_SIZE = 32
+BATCH_SIZE = 2
 
 # The number of training epochs.
-TRAIN_EPOCHS = 60
+TRAIN_EPOCHS = 70
 
 # Epochs for initial supervised training, should be less than TRAIN_EPOCHS
-SUPERVISED_EPOCHS = 10
+SUPERVISED_EPOCHS = 15
 
 # Boolean whether to do Semi-Supervised Training or not
 DO_SEMI = True

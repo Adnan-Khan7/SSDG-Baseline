@@ -44,9 +44,14 @@ def get_pseudo_labels(dataset, model, threshold):
 
     imgList = []
     labelList = []
+
+    ###################
+    #Validation
+    total_correct = 0
+    ###################
     # Iterate over the dataset by batches.
     for batch in tqdm(data_loader):
-        img, _ = batch
+        img, labels = batch
 
         # Forward the data
         # Using torch.no_grad() accelerates the forward process.
@@ -59,68 +64,30 @@ def get_pseudo_labels(dataset, model, threshold):
         # Filter the data and construct a new dataset.
         score_list, class_list = logits.max(dim=-1)
         score_list, class_list = score_list.cpu().numpy(), class_list.cpu().numpy()
-        # If score is greater than threshold then only assign psuedo label
+        # If score is greater than threshold then only assign pseudo label
         score_filter = score_list > threshold
         score_list, class_list = score_list[score_filter], class_list[score_filter]
 
+        ###########################
+        labels = labels[score_filter]
+        labels = labels.numpy()
+        n_corr = sum(class_list == labels)
+        total_correct = total_correct + n_corr
+        ###########################
+
         imgList.append(img[score_filter])
         labelList.append(class_list)
-    dataset2 = noLabeledDataset(imgList, labelList)
-    total_p_labels = len(dataset2)
-    #####################################################################################
-    # Validation of generated psuedo labels
-    # model.eval()
-    valid_pseudo_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0,
-                                     pin_memory=False)
-    # # These are used to record information in validation.
-    valid_loss = []
-    valid_corr = []
-    predictions_valid = []
-    criterion = nn.CrossEntropyLoss()
-    #
-    print("Validating the generated pseudo labels...")
-    logging.info("Validating the generated pseudo labels...")
-    # # Iterate the validation set by batches.
-    for batch in tqdm(valid_pseudo_loader):
-        # A batch consists of image data and corresponding labels.
-        imgs, labels = batch
-
-        # We don't need gradient in validation.
-        # Using torch.no_grad() accelerates the forward process.
-        with torch.no_grad():
-            logits = model(imgs.to(device))
-
-        # We can still compute the loss (but not the gradient).
-        loss = criterion(logits, labels.to(device))
-
-        # Compute the accuracy for current batch.
-        n_corr = sum((logits.argmax(dim=-1) == labels.to(device)))
-        valid_corr.append(n_corr)
-        # Take the class with greatest logit as prediction and record it.
-        predictions_valid.extend(logits.argmax(dim=-1).cpu().numpy().tolist())
-
-        # Record the loss and accuracy.
-        valid_loss.append(loss.item())
-
-    # The average loss and accuracy for entire validation set is the average of the recorded values.
-    valid_loss = sum(valid_loss) / len(valid_loss)
-    valid_acc = sum(valid_corr) / len(predictions_valid)
-    # Print the information.
-    print(f"[ Pseudo label eval | loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
-    logging.info(f"[ Pseudo label eval | loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
-    total_correct = len(predictions_valid)
-    print(f"Number of correct predications on unlabeled dataset: {predictions_valid}")
-    logging.info(f"Number of correct predications on unlabeled dataset: {predictions_valid}")
+    dataset = noLabeledDataset(imgList, labelList)
+    total_p_labels = len(dataset)
     print(f"Number of total generated pseudo labels: {total_p_labels}")
     logging.info(f"Number of total generated pseudo labels: {total_p_labels}")
-    print(f"Psuedo Labels accuracy: {total_correct} / {total_p_labels} =  {predictions_valid / total_p_labels}")
-    logging.info(f"Psuedo Labels accuracy: {total_correct} / {total_p_labels} =  {predictions_valid / total_p_labels}")
-
-    ######################################################################################
-
+    print(f"Number of correct pseudo labels: {total_correct}")
+    logging.info(f"Number of correct pseudo labels: {total_correct}")
+    print(f"Pseudo Labels Accuracy: {total_correct} / {total_p_labels} = {total_correct / total_p_labels} ")
+    logging.info(f"Pseudo Labels Accuracy: {total_correct} / {total_p_labels} = {total_correct / total_p_labels} ")
     del imgList
     del labelList
     del data_loader
     # # Turn off the eval mode.
     model.train()
-    return dataset2
+    return dataset
