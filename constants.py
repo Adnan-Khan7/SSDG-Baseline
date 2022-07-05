@@ -11,7 +11,7 @@ THRESH = 0.6
 
 LR = 0.00005
 # Batch size for training, validation, and testing.
-BATCH_SIZE = 2
+BATCH_SIZE = 32
 
 # The number of training epochs.
 TRAIN_EPOCHS = 70
