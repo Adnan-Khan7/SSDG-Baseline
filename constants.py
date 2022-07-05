@@ -5,7 +5,7 @@ MODEL_NAME = "resnet50"
 NUM_CLASSES = 7
 
 # Threshold for the ssl
-THRESH = 0.7
+THRESH = 0.6
 
 # Learning rate
 
@@ -36,7 +36,7 @@ DATA_TEST_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/pacs_dataset/pacs_art_ta
 IMG_EXTENSIONS = (".jpg", ".jpeg", ".png")
 
 # Directory for logs to save
-OUTPUT_DIR = "/home/adnan.khan/Desktop/SSDG_Baseline/outputs/exp6/"
+OUTPUT_DIR = "/home/adnan.khan/Desktop/SSDG_Baseline/outputs/test_experiment/"
 
 # Save model at specific epoch
 SAVE_EPOCH = 59
