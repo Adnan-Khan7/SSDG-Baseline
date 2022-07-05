@@ -7,14 +7,14 @@ from constants import *
 from torchvision import models
 from PIL import Image
 # "ConcatDataset" and "Subset" are possibly useful when doing semi-supervised learning.
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, ConcatDataset
 # This is for the progress bar.
 from tqdm.auto import tqdm
 # adding comment
 logging.basicConfig(filename=OUTPUT_DIR + 'logs.log', level=logging.INFO,
                     format='%(asctime)s:%(levelname)s:%(message)s')
-print(f"Configuration: \n model:{MODEL_NAME}, SSL Threshold: {THRESH}, Learning Rate: {LR}, Batch Size: {BATCH_SIZE}, Epochs: {EPOCHS}")
-logging.info(f"Configuration: \n model:{MODEL_NAME}, SSL Threshold: {THRESH}, Learning Rate: {LR}, Batch Size: {BATCH_SIZE}, Epochs: {EPOCHS}")
+print(f"Configuration: \n model:{MODEL_NAME}, SSL Threshold: {THRESH}, Learning Rate: {LR}, Batch Size: {BATCH_SIZE}, Epochs: {TRAIN_EPOCHS}")
+logging.info(f"Configuration: \n model:{MODEL_NAME}, SSL Threshold: {THRESH}, Learning Rate: {LR}, Batch Size: {BATCH_SIZE}, Epochs: {TRAIN_EPOCHS}")
 
 
 def initialize_model(model_name, num_classes, feature_extract, use_pretrained=True):
@@ -141,8 +141,8 @@ def train_supervised(train_loader_labeled):
     train_acc = sum(train_accs) / len(train_accs)
 
     # Print the information.
-    print(f"[ Train | {epoch + 1:03d}/{EPOCHS:03d} ] loss = {train_loss:.5f}, acc = {train_acc:.5f}")
-    logging.info(f"[ Train | {epoch + 1:03d}/{EPOCHS:03d} ] loss = {train_loss:.5f}, acc = {train_acc:.5f}")
+    print(f"[ Train | {epoch + 1:03d}/{TRAIN_EPOCHS:03d} ] loss = {train_loss:.5f}, acc = {train_acc:.5f}")
+    logging.info(f"[ Train | {epoch + 1:03d}/{TRAIN_EPOCHS:03d} ] loss = {train_loss:.5f}, acc = {train_acc:.5f}")
 
     return
 
@@ -200,8 +200,10 @@ def train_unsupervised(train_loader_labeled, train_loader_unlabeled):
     train_acc = sum(train_correct) / len(train_total)
 
     # Print the information.
-    print(f"[ Train | {epoch + 1:03d}/{EPOCHS:03d} ] loss = {train_loss:.5f}, acc = {train_acc:.5f}")
-    logging.info(f"[ Train | {epoch + 1:03d}/{EPOCHS:03d} ] loss = {train_loss:.5f}, acc = {train_acc:.5f}")
+    print(f"[ Train | {epoch + 1:03d}/{TRAIN_EPOCHS:03d} ] loss = {train_loss:.5f}, acc = {train_acc:.5f}, supervised "
+          f"training epochs = {SUPERVISED_EPOCHS}")
+    logging.info(f"[ Train | {epoch + 1:03d}/{TRAIN_EPOCHS:03d} ] loss = {train_loss:.5f}, acc = {train_acc:.5f}, "
+                 f"supervised training epochs = {SUPERVISED_EPOCHS}")
     return
 
 
@@ -222,94 +224,93 @@ criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LR, weight_decay=1e-5)
 
 # Whether to do semi-supervised learning.
-do_semi = True
+do_semi = DO_SEMI
 print("Starting training ")
 logging.info("Starting training ")
 
-for epoch in range(EPOCHS):
+for epoch in range(TRAIN_EPOCHS):
     # ---------- TODO ----------
     # In each epoch, relabel the unlabeled dataset for semi-supervised learning.
     # Then you can combine the labeled dataset and pseudo-labeled dataset for the training.
-    if do_semi:
+    if epoch < SUPERVISED_EPOCHS:
+        train_loader_labeled = DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=0,
+                                          pin_memory=False)
+        train_supervised(train_loader_labeled)
+    elif do_semi:
         # Obtain pseudo-labels for unlabeled data using trained model.
         pseudo_set = get_pseudo_labels(unlabeled_set, model, THRESH)
-        print(len(pseudo_set))
-        if len(pseudo_set) > BATCH_SIZE:
-            train_loader_labeled = DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=0,
-                                              pin_memory=False)
-            train_loader_unlabeled = DataLoader(pseudo_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=0,
-                                                pin_memory=False)
-            train_unsupervised(train_loader_labeled, train_loader_unlabeled)
-            # concat_dataset = ConcatDataset([train_set, pseudo_set])
-            # train_loader_labeled = DataLoader(concat_dataset, batch_size=batch_size, shuffle=True, num_workers=0, pin_memory=False)
-            new_labels = len(train_loader_unlabeled)
-            print(f"Number of pseudo labeled training examples: {new_labels}")
-            logging.info(f"Number of pseudo labeled training examples: {new_labels}")
-            # del concat_dataset
-            # del pseudo_set
-        else:
+        if len(pseudo_set) == 0:
+            print(f"No new pseudo labels generated at epoch {epoch}..., \n Continue Supervised Training with labeled "
+                  f"dataset")
+            logging.info(f"No new pseudo labels generated at epoch {epoch}..., \n Continue Supervised Training with "
+                         f"labeled dataset")
             train_loader_labeled = DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=0,
                                               pin_memory=False)
             train_supervised(train_loader_labeled)
-
+        else:
+            num_pseudo_labels = len(pseudo_set)
+            print(f"Number of generated pseudo labels at epoch {epoch} are {num_pseudo_labels}")
+            logging.info(f"Number of generated pseudo labels at epoch {epoch} are {num_pseudo_labels}")
+            concat_dataset = ConcatDataset([train_set, pseudo_set])
+            total_train = len(concat_dataset)
+            print(f"Number of total training examples are: {total_train}")
+            logging.info(f"Number of total training examples are: {total_train}")
+            train_loader_labeled = DataLoader(concat_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0, pin_memory=False)
+            train_supervised(train_loader_labeled)
+            del concat_dataset
+            del pseudo_set
     else:
         train_loader_labeled = DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=0,
                                           pin_memory=False)
         train_supervised(train_loader_labeled)
-        # Construct a new dataset and a data loader for training.
-        # This is used in semi-supervised learning only.
-        # concat_dataset = ConcatDataset([train_set, pseudo_set])
-        # train_loader = DataLoader(concat_dataset, batch_size=batch_size, shuffle=True, num_workers=0, pin_memory=False)
-        # del concat_dataset
-        # del pseudo_set
 
-    # ---------- Validation ----------
-    # Make sure the model is in eval mode so that some modules like dropout are disabled and work normally.
-    model.eval()
-
-    # These are used to record information in validation.
-    valid_loss = []
-    valid_corr = []
-    predictions_valid = []
-
-    # Iterate the validation set by batches.
-    for batch in tqdm(valid_loader):
-        # A batch consists of image data and corresponding labels.
-        imgs, labels = batch
-
-        # We don't need gradient in validation.
-        # Using torch.no_grad() accelerates the forward process.
-        with torch.no_grad():
-            logits = model(imgs.to(device))
-
-        # We can still compute the loss (but not the gradient).
-        loss = criterion(logits, labels.to(device))
-
-        # Compute the accuracy for current batch.
-        n_corr = sum((logits.argmax(dim=-1) == labels.to(device)))
-        valid_corr.append(n_corr)
-        # Take the class with greatest logit as prediction and record it.
-        predictions_valid.extend(logits.argmax(dim=-1).cpu().numpy().tolist())
-
-        # Record the loss and accuracy.
-        valid_loss.append(loss.item())
-
-    # The average loss and accuracy for entire validation set is the average of the recorded values.
-    valid_loss = sum(valid_loss) / len(valid_loss)
-    valid_acc = sum(valid_corr) / len(predictions_valid)
-
-    if valid_acc > best_acc:
-        best_model = model
-        best_acc = valid_acc
-
-    if epoch == SAVE_EPOCH:
-        save_models(epoch, best_model)
-    
-    print("best_acc so far: ", best_acc)
-    logging.info(f"best_acc so far: {best_acc}")
-    # Print the information.
-    print(f"[ Valid | {epoch + 1:03d}/{EPOCHS:03d} ] loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
-    logging.info(f"[ Valid | {epoch + 1:03d}/{EPOCHS:03d} ] loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
+    # # ---------- Validation ----------
+    # # Make sure the model is in eval mode so that some modules like dropout are disabled and work normally.
+    # model.eval()
+    #
+    # # These are used to record information in validation.
+    # valid_loss = []
+    # valid_corr = []
+    # predictions_valid = []
+    #
+    # # Iterate the validation set by batches.
+    # for batch in tqdm(valid_loader):
+    #     # A batch consists of image data and corresponding labels.
+    #     imgs, labels = batch
+    #
+    #     # We don't need gradient in validation.
+    #     # Using torch.no_grad() accelerates the forward process.
+    #     with torch.no_grad():
+    #         logits = model(imgs.to(device))
+    #
+    #     # We can still compute the loss (but not the gradient).
+    #     loss = criterion(logits, labels.to(device))
+    #
+    #     # Compute the accuracy for current batch.
+    #     n_corr = sum((logits.argmax(dim=-1) == labels.to(device)))
+    #     valid_corr.append(n_corr)
+    #     # Take the class with greatest logit as prediction and record it.
+    #     predictions_valid.extend(logits.argmax(dim=-1).cpu().numpy().tolist())
+    #
+    #     # Record the loss and accuracy.
+    #     valid_loss.append(loss.item())
+    #
+    # # The average loss and accuracy for entire validation set is the average of the recorded values.
+    # valid_loss = sum(valid_loss) / len(valid_loss)
+    # valid_acc = sum(valid_corr) / len(predictions_valid)
+    #
+    # if valid_acc > best_acc:
+    #     best_model = model
+    #     best_acc = valid_acc
+    #
+    # if epoch == SAVE_EPOCH:
+    #     save_models(epoch, best_model)
+    #
+    # print("best_acc so far: ", best_acc)
+    # logging.info(f"best_acc so far: {best_acc}")
+    # # Print the information.
+    # print(f"[ Valid | {epoch + 1:03d}/{TRAIN_EPOCHS:03d} ] loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
+    # logging.info(f"[ Valid | {epoch + 1:03d}/{TRAIN_EPOCHS:03d} ] loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
 
 print("Starting test")
 logging.info(" Starting test")

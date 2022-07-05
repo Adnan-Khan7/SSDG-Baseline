@@ -2,8 +2,12 @@ import torch
 import torch.nn as nn
 from constants import *
 from torch.utils.data import DataLoader, Dataset
+import logging
 # This is for the progress bar.
 from tqdm.auto import tqdm
+
+logging.basicConfig(filename=OUTPUT_DIR + 'logs.log', level=logging.INFO,
+                    format='%(asctime)s:%(levelname)s:%(message)s')
 
 class noLabeledDataset(Dataset):
     def __init__(self, imgList, labelList):
@@ -26,6 +30,7 @@ class noLabeledDataset(Dataset):
 def get_pseudo_labels(dataset, model, threshold):
     # This functions generates pseudo-labels of a dataset using given model.
     device = "cuda" if torch.cuda.is_available() else "cpu"
+
 
     # Construct a data loader.
     data_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False)
@@ -64,4 +69,6 @@ def get_pseudo_labels(dataset, model, threshold):
     del data_loader
     # # Turn off the eval mode.
     model.train()
+    print(f"Generating pseudo labels for next epoch...")
+    logging.info(f"Generating pseudo labels for next epoch...")
     return dataset

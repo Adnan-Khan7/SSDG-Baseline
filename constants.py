@@ -11,10 +11,16 @@ THRESH = 0.6
 
 LR = 0.00005
 # Batch size for training, validation, and testing.
-BATCH_SIZE = 2
+BATCH_SIZE = 32
 
 # The number of training epochs.
-EPOCHS = 2
+TRAIN_EPOCHS = 60
+
+# Epochs for initial supervised training, should be less than TRAIN_EPOCHS
+SUPERVISED_EPOCHS = 10
+
+# Boolean whether to do Semi-Supervised Training or not
+DO_SEMI = True
 
 # Flag for feature extracting. When False, we finetune the whole model,
 #   when True we only update the reshaped layer params
