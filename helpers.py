@@ -108,13 +108,13 @@ def get_pseudo_labels(dataset, model, threshold):
     # Print the information.
     print(f"[ Pseudo label eval | loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
     logging.info(f"[ Pseudo label eval | loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
-    total_correct = len(valid_corr)
-    print(f"Number of correct predications on unlabeled dataset: {total_correct}")
-    logging.info(f"Number of correct predications on unlabeled dataset: {total_correct}")
+    total_correct = len(predictions_valid)
+    print(f"Number of correct predications on unlabeled dataset: {predictions_valid}")
+    logging.info(f"Number of correct predications on unlabeled dataset: {predictions_valid}")
     print(f"Number of total generated pseudo labels: {total_p_labels}")
     logging.info(f"Number of total generated pseudo labels: {total_p_labels}")
-    print(f"Psuedo Labels accuracy: {total_correct} / {total_p_labels} =  {total_correct / total_p_labels}")
-    logging.info(f"Psuedo Labels accuracy: {total_correct} / {total_p_labels} =  {total_correct / total_p_labels}")
+    print(f"Psuedo Labels accuracy: {total_correct} / {total_p_labels} =  {predictions_valid / total_p_labels}")
+    logging.info(f"Psuedo Labels accuracy: {total_correct} / {total_p_labels} =  {predictions_valid / total_p_labels}")
 
     ######################################################################################
 
