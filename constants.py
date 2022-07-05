@@ -11,10 +11,10 @@ THRESH = 0.6
 
 LR = 0.00005
 # Batch size for training, validation, and testing.
-BATCH_SIZE = 32
+BATCH_SIZE = 2
 
 # The number of training epochs.
-EPOCHS = 60
+EPOCHS = 2
 
 # Flag for feature extracting. When False, we finetune the whole model,
 #   when True we only update the reshaped layer params

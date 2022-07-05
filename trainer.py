@@ -233,6 +233,7 @@ for epoch in range(EPOCHS):
     if do_semi:
         # Obtain pseudo-labels for unlabeled data using trained model.
         pseudo_set = get_pseudo_labels(unlabeled_set, model, THRESH)
+        print(len(pseudo_set))
         if len(pseudo_set) > BATCH_SIZE:
             train_loader_labeled = DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=0,
                                               pin_memory=False)
