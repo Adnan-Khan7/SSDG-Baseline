@@ -17,7 +17,7 @@ BATCH_SIZE = 32
 TRAIN_EPOCHS = 60
 
 # Epochs for initial supervised training, should be less than TRAIN_EPOCHS
-SUPERVISED_EPOCHS = 15
+SUPERVISED_EPOCHS = 10
 
 # Boolean whether to do Semi-Supervised Training or not
 DO_SEMI = True

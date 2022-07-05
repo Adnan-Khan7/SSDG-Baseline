@@ -78,6 +78,8 @@ def get_pseudo_labels(dataset, model, threshold):
     predictions_valid = []
     criterion = nn.CrossEntropyLoss()
     #
+    print("Validating the generated pseudo labels...")
+    logging.info("Validating the generated pseudo labels...")
     # # Iterate the validation set by batches.
     for batch in tqdm(valid_pseudo_loader):
         # A batch consists of image data and corresponding labels.
