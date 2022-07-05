@@ -27,10 +27,10 @@ DO_SEMI = True
 FEATURE_EXTRACTOR = False
 
 # DATA PATHS
-DATA_TRAIN_SET = "/home/adnan.khan/Desktop/ssl_vit/pacs_dataset/pacs_art_target_unlabeled/train"
-DATA_UNLABELED_SET = "/home/adnan.khan/Desktop/ssl_vit/pacs_dataset/pacs_art_target_unlabeled/unlabeled"
-DATA_VALID_SET = "/home/adnan.khan/Desktop/ssl_vit/pacs_dataset/pacs_art_target_unlabeled/val"
-DATA_TEST_SET = "/home/adnan.khan/Desktop/ssl_vit/pacs_dataset/pacs_art_target_unlabeled/test"
+DATA_TRAIN_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/pacs_dataset/pacs_art_target_unlabeled/train"
+DATA_UNLABELED_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/pacs_dataset/pacs_art_target_unlabeled/unlabeled"
+DATA_VALID_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/pacs_dataset/pacs_art_target_unlabeled/val"
+DATA_TEST_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/pacs_dataset/pacs_art_target_unlabeled/test"
 
 # Image extensions to use from data paths
 IMG_EXTENSIONS = (".jpg", ".jpeg", ".png")
