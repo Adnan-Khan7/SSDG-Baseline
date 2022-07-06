@@ -3,7 +3,6 @@ import torch.nn as nn
 from constants import *
 from torch.utils.data import DataLoader, Dataset
 import logging
-# This is for the progress bar.
 from tqdm.auto import tqdm
 
 logging.basicConfig(filename=OUTPUT_DIR + 'logs.log', level=logging.INFO,
@@ -44,11 +43,7 @@ def get_pseudo_labels(dataset, model, threshold):
 
     imgList = []
     labelList = []
-
-    ###################
-    #Validation
     total_correct = 0
-    ###################
     # Iterate over the dataset by batches.
     for batch in tqdm(data_loader):
         img, labels = batch
@@ -67,13 +62,11 @@ def get_pseudo_labels(dataset, model, threshold):
         # If score is greater than threshold then only assign pseudo label
         score_filter = score_list > threshold
         score_list, class_list = score_list[score_filter], class_list[score_filter]
-
-        ###########################
+        # Filters also the actual labels for evaluating the pseudo labels
         labels = labels[score_filter]
         labels = labels.numpy()
         n_corr = sum(class_list == labels)
         total_correct = total_correct + n_corr
-        ###########################
 
         imgList.append(img[score_filter])
         labelList.append(class_list)
