@@ -76,8 +76,9 @@ def get_pseudo_labels(dataset, model, threshold):
     logging.info(f"Number of total generated pseudo labels: {total_p_labels}")
     print(f"Number of correct pseudo labels: {total_correct}")
     logging.info(f"Number of correct pseudo labels: {total_correct}")
-    print(f"Pseudo Labels Accuracy: {total_correct} / {total_p_labels} = {total_correct / total_p_labels} ")
-    logging.info(f"Pseudo Labels Accuracy: {total_correct} / {total_p_labels} = {total_correct / total_p_labels} ")
+    if total_p_labels > 0:
+        print(f"Pseudo Labels Accuracy: {total_correct} / {total_p_labels} = {total_correct / total_p_labels} ")
+        logging.info(f"Pseudo Labels Accuracy: {total_correct} / {total_p_labels} = {total_correct / total_p_labels} ")
     del imgList
     del labelList
     del data_loader
