@@ -118,6 +118,8 @@ print("Starting training ")
 logging.info("Starting training ")
 loss_values = []
 acc_values = []
+new_labels = []
+new_correct = []
 for epoch in range(TRAIN_EPOCHS):
     # ---------- TODO ----------
     # In each epoch, relabel the unlabeled dataset for semi-supervised learning.
@@ -131,7 +133,8 @@ for epoch in range(TRAIN_EPOCHS):
         acc_values.append(acc)
     elif do_semi:
         # Obtain pseudo-labels for unlabeled data using trained model.
-        pseudo_set = get_pseudo_labels(unlabeled_set, model, THRESH)
+        pseudo_set, total_p_labels, total_correct = get_pseudo_labels(unlabeled_set, model, THRESH)
+
         if len(pseudo_set) == 0:
             print(f"No new pseudo labels generated at epoch {epoch + 1}..., \n Continue Supervised Training with "
                   f"labeled dataset")
@@ -152,6 +155,8 @@ for epoch in range(TRAIN_EPOCHS):
             train_loss, acc = train_supervised(train_loader_labeled)
             loss_values.append(train_loss)
             acc_values.append(acc)
+            new_labels.append(total_p_labels)
+            new_correct.append(total_correct)
             del concat_dataset
             del pseudo_set
     else:
@@ -160,6 +165,9 @@ for epoch in range(TRAIN_EPOCHS):
         train_loss, acc = train_supervised(train_loader_labeled)
         loss_values.append(train_loss)
         acc_values.append(acc)
+
+
+
 # Plot Training Loss
 plt.plot(range(1, TRAIN_EPOCHS + 1), loss_values)
 plt.plot(range(1, TRAIN_EPOCHS + 1), acc_values)
@@ -168,7 +176,18 @@ plt.title("Training Loss and Accuracy")
 plt.xlabel("Epochs")
 plt.ylabel("Training Loss and Accuracy")
 plt.legend(['Loss', 'Accuracy'], loc='upper right')
+plt.savefig(OUTPUT_DIR + '/loss_accuracy.png')
 plt.show()
+if len(new_labels) and len(new_correct) > 0:
+    # Plot labels
+    plt.plot(range(1, len(new_labels)+1), new_labels)
+    plt.plot(range(1, len(new_correct)+1), new_correct)
+    plt.xticks(range(1, len(new_labels)+1))
+    plt.title("Number of new/correct pseudo labels")
+    plt.xlabel("Count of Epochs at which new labels are generated")
+    plt.ylabel("Labels count")
+    plt.legend(['New Labels Generated', 'Correct Labels'], loc='upper left')
+    plt.savefig(OUTPUT_DIR + '/pseudo_labels.png')
 # Testing the model
 print("Starting test")
 logging.info(" Starting test")

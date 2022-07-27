@@ -84,4 +84,4 @@ def get_pseudo_labels(dataset, model, threshold):
     del data_loader
     # # Turn off the eval mode.
     model.train()
-    return dataset
+    return dataset, total_p_labels, total_correct
