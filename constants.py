@@ -5,7 +5,7 @@ MODEL_NAME = "resnet50"
 NUM_CLASSES = 7
 
 # Threshold for the ssl
-THRESH = 0.2
+THRESH = 0.75
 
 # Learning rate
 
@@ -23,12 +23,12 @@ SUPERVISED_EPOCHS = 5
 DO_SEMI = True
 
 # DATA PATHS
-DATA_TRAIN_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/pacs_art_target_unlabeled_dummy/train"
-DATA_UNLABELED_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/pacs_art_target_unlabeled_dummy/unlabeled"
-DATA_TEST_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/pacs_art_target_unlabeled_dummy/test"
+DATA_TRAIN_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/Unlabeled_PACS/pacs_sketch_target_unlabeled/train"
+DATA_UNLABELED_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/Unlabeled_PACS/pacs_sketch_target_unlabeled/unlabeled"
+DATA_TEST_SET = "/home/adnan.khan/Desktop/SSDG_Baseline/Unlabeled_PACS/pacs_sketch_target_unlabeled/test"
 
 # Image extensions to use from data paths
 IMG_EXTENSIONS = (".jpg", ".jpeg", ".png")
 
 # Directory for logs to save
-OUTPUT_DIR = "//home/adnan.khan/Desktop/SSDG_Baseline/misc/"
+OUTPUT_DIR = "/home/adnan.khan/Desktop/SSDG_Baseline/outputs_StyleMatch_10Labels/sketch_target2/"

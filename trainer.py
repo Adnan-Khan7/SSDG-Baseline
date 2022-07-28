@@ -43,8 +43,19 @@ def initialize_model(model_name, num_classes, use_pretrained=True):
 
     return model_ft, input_size
 
+def deactivate_batchnorm(m):
+    if isinstance(m, nn.BatchNorm2d):
+        m.reset_parameters()
+        m.eval()
+        with torch.no_grad():
+            m.weight.fill_(1.0)
+            m.bias.zero_()
+
 # Initialize the model for this run
 model_ft, input_size = initialize_model(MODEL_NAME, NUM_CLASSES, use_pretrained=True)
+print(model_ft)
+model_ft.apply(deactivate_batchnorm)
+print(model_ft)
 
 # Print the model we just instantiated
 # print(model_ft)
