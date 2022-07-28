@@ -1,0 +1,160 @@
+2022-07-06 15:22:04,360:INFO:Configuration: 
+ model:resnet50, SSL Threshold: 0.8, Learning Rate: 0.0003, Batch Size: 32, Epochs: 30
+2022-07-06 15:22:07,681:INFO:Starting training 
+2022-07-06 15:22:10,009:INFO:[ Train | 001/030 ] loss = 1.32647, acc = 0.54663
+2022-07-06 15:22:11,667:INFO:[ Train | 002/030 ] loss = 0.25705, acc = 0.92163
+2022-07-06 15:22:13,286:INFO:[ Train | 003/030 ] loss = 0.21204, acc = 0.93056
+2022-07-06 15:22:14,914:INFO:[ Train | 004/030 ] loss = 0.10507, acc = 0.97768
+2022-07-06 15:22:16,468:INFO:[ Train | 005/030 ] loss = 0.12835, acc = 0.94494
+2022-07-06 15:22:16,468:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:22:50,453:INFO:Number of total generated pseudo labels: 6153
+2022-07-06 15:22:50,453:INFO:Number of correct pseudo labels: 4522
+2022-07-06 15:22:50,453:INFO:Pseudo Labels Accuracy: 4522 / 6153 = 0.7349260523321957 
+2022-07-06 15:22:50,458:INFO:Number of total training examples are: 6363
+2022-07-06 15:23:21,942:INFO:[ Train | 006/030 ] loss = 0.51071, acc = 0.83023
+2022-07-06 15:23:21,943:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:23:56,062:INFO:Number of total generated pseudo labels: 5614
+2022-07-06 15:23:56,062:INFO:Number of correct pseudo labels: 4028
+2022-07-06 15:23:56,062:INFO:Pseudo Labels Accuracy: 4028 / 5614 = 0.717491984324902 
+2022-07-06 15:23:56,070:INFO:Number of total training examples are: 5824
+2022-07-06 15:24:25,255:INFO:[ Train | 007/030 ] loss = 0.20401, acc = 0.93492
+2022-07-06 15:24:25,255:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:24:59,043:INFO:Number of total generated pseudo labels: 6133
+2022-07-06 15:24:59,043:INFO:Number of correct pseudo labels: 4442
+2022-07-06 15:24:59,044:INFO:Pseudo Labels Accuracy: 4442 / 6133 = 0.7242784933963803 
+2022-07-06 15:24:59,050:INFO:Number of total training examples are: 6343
+2022-07-06 15:25:31,415:INFO:[ Train | 008/030 ] loss = 0.25733, acc = 0.90874
+2022-07-06 15:25:31,416:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:26:04,675:INFO:Number of total generated pseudo labels: 6329
+2022-07-06 15:26:04,675:INFO:Number of correct pseudo labels: 4550
+2022-07-06 15:26:04,675:INFO:Pseudo Labels Accuracy: 4550 / 6329 = 0.7189129404329277 
+2022-07-06 15:26:04,706:INFO:Number of total training examples are: 6539
+2022-07-06 15:26:37,517:INFO:[ Train | 009/030 ] loss = 0.19135, acc = 0.93689
+2022-07-06 15:26:37,517:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:27:10,937:INFO:Number of total generated pseudo labels: 6799
+2022-07-06 15:27:10,937:INFO:Number of correct pseudo labels: 4208
+2022-07-06 15:27:10,937:INFO:Pseudo Labels Accuracy: 4208 / 6799 = 0.6189145462568024 
+2022-07-06 15:27:10,941:INFO:Number of total training examples are: 7009
+2022-07-06 15:27:46,008:INFO:[ Train | 010/030 ] loss = 0.23599, acc = 0.92514
+2022-07-06 15:27:46,009:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:28:18,891:INFO:Number of total generated pseudo labels: 6966
+2022-07-06 15:28:18,891:INFO:Number of correct pseudo labels: 3454
+2022-07-06 15:28:18,891:INFO:Pseudo Labels Accuracy: 3454 / 6966 = 0.49583692219351133 
+2022-07-06 15:28:18,967:INFO:Number of total training examples are: 7176
+2022-07-06 15:28:55,831:INFO:[ Train | 011/030 ] loss = 0.16250, acc = 0.94403
+2022-07-06 15:28:55,832:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:29:29,050:INFO:Number of total generated pseudo labels: 7121
+2022-07-06 15:29:29,050:INFO:Number of correct pseudo labels: 3655
+2022-07-06 15:29:29,050:INFO:Pseudo Labels Accuracy: 3655 / 7121 = 0.5132706080606656 
+2022-07-06 15:29:29,133:INFO:Number of total training examples are: 7331
+2022-07-06 15:30:05,753:INFO:[ Train | 012/030 ] loss = 0.14084, acc = 0.95435
+2022-07-06 15:30:05,753:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:30:39,278:INFO:Number of total generated pseudo labels: 7138
+2022-07-06 15:30:39,278:INFO:Number of correct pseudo labels: 3773
+2022-07-06 15:30:39,278:INFO:Pseudo Labels Accuracy: 3773 / 7138 = 0.5285794340151303 
+2022-07-06 15:30:39,282:INFO:Number of total training examples are: 7348
+2022-07-06 15:31:15,428:INFO:[ Train | 013/030 ] loss = 0.13115, acc = 0.95772
+2022-07-06 15:31:15,428:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:31:48,626:INFO:Number of total generated pseudo labels: 7024
+2022-07-06 15:31:48,626:INFO:Number of correct pseudo labels: 3858
+2022-07-06 15:31:48,626:INFO:Pseudo Labels Accuracy: 3858 / 7024 = 0.5492596810933941 
+2022-07-06 15:31:48,627:INFO:Number of total training examples are: 7234
+2022-07-06 15:32:24,546:INFO:[ Train | 014/030 ] loss = 0.12856, acc = 0.95746
+2022-07-06 15:32:24,547:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:32:58,726:INFO:Number of total generated pseudo labels: 6934
+2022-07-06 15:32:58,726:INFO:Number of correct pseudo labels: 4044
+2022-07-06 15:32:58,726:INFO:Pseudo Labels Accuracy: 4044 / 6934 = 0.5832131525814825 
+2022-07-06 15:32:58,767:INFO:Number of total training examples are: 7144
+2022-07-06 15:33:34,642:INFO:[ Train | 015/030 ] loss = 0.12310, acc = 0.96066
+2022-07-06 15:33:34,643:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:34:09,348:INFO:Number of total generated pseudo labels: 7138
+2022-07-06 15:34:09,348:INFO:Number of correct pseudo labels: 4154
+2022-07-06 15:34:09,348:INFO:Pseudo Labels Accuracy: 4154 / 7138 = 0.5819557298963295 
+2022-07-06 15:34:09,350:INFO:Number of total training examples are: 7348
+2022-07-06 15:34:45,945:INFO:[ Train | 016/030 ] loss = 0.14900, acc = 0.94918
+2022-07-06 15:34:45,945:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:35:19,780:INFO:Number of total generated pseudo labels: 7048
+2022-07-06 15:35:19,780:INFO:Number of correct pseudo labels: 4190
+2022-07-06 15:35:19,780:INFO:Pseudo Labels Accuracy: 4190 / 7048 = 0.5944948921679909 
+2022-07-06 15:35:19,809:INFO:Number of total training examples are: 7258
+2022-07-06 15:35:56,197:INFO:[ Train | 017/030 ] loss = 0.11540, acc = 0.95864
+2022-07-06 15:35:56,198:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:36:29,769:INFO:Number of total generated pseudo labels: 7231
+2022-07-06 15:36:29,769:INFO:Number of correct pseudo labels: 4170
+2022-07-06 15:36:29,769:INFO:Pseudo Labels Accuracy: 4170 / 7231 = 0.5766837228599088 
+2022-07-06 15:36:29,770:INFO:Number of total training examples are: 7441
+2022-07-06 15:37:06,881:INFO:[ Train | 018/030 ] loss = 0.11617, acc = 0.96045
+2022-07-06 15:37:06,882:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:37:40,664:INFO:Number of total generated pseudo labels: 7188
+2022-07-06 15:37:40,664:INFO:Number of correct pseudo labels: 4206
+2022-07-06 15:37:40,664:INFO:Pseudo Labels Accuracy: 4206 / 7188 = 0.5851419031719532 
+2022-07-06 15:37:40,721:INFO:Number of total training examples are: 7398
+2022-07-06 15:38:17,737:INFO:[ Train | 019/030 ] loss = 0.11600, acc = 0.95932
+2022-07-06 15:38:17,738:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:38:50,933:INFO:Number of total generated pseudo labels: 7370
+2022-07-06 15:38:50,933:INFO:Number of correct pseudo labels: 4104
+2022-07-06 15:38:50,933:INFO:Pseudo Labels Accuracy: 4104 / 7370 = 0.5568521031207598 
+2022-07-06 15:38:50,934:INFO:Number of total training examples are: 7580
+2022-07-06 15:39:28,522:INFO:[ Train | 020/030 ] loss = 0.12350, acc = 0.95566
+2022-07-06 15:39:28,523:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:40:01,916:INFO:Number of total generated pseudo labels: 7438
+2022-07-06 15:40:01,916:INFO:Number of correct pseudo labels: 4084
+2022-07-06 15:40:01,916:INFO:Pseudo Labels Accuracy: 4084 / 7438 = 0.5490723312718473 
+2022-07-06 15:40:01,920:INFO:Number of total training examples are: 7648
+2022-07-06 15:40:39,777:INFO:[ Train | 021/030 ] loss = 0.09148, acc = 0.97032
+2022-07-06 15:40:39,777:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:41:13,391:INFO:Number of total generated pseudo labels: 7323
+2022-07-06 15:41:13,392:INFO:Number of correct pseudo labels: 4099
+2022-07-06 15:41:13,392:INFO:Pseudo Labels Accuracy: 4099 / 7323 = 0.5597432746142291 
+2022-07-06 15:41:13,458:INFO:Number of total training examples are: 7533
+2022-07-06 15:41:50,610:INFO:[ Train | 022/030 ] loss = 0.10413, acc = 0.96425
+2022-07-06 15:41:50,611:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:42:24,115:INFO:Number of total generated pseudo labels: 7409
+2022-07-06 15:42:24,115:INFO:Number of correct pseudo labels: 4143
+2022-07-06 15:42:24,115:INFO:Pseudo Labels Accuracy: 4143 / 7409 = 0.5591847752733162 
+2022-07-06 15:42:24,116:INFO:Number of total training examples are: 7619
+2022-07-06 15:43:01,759:INFO:[ Train | 023/030 ] loss = 0.10544, acc = 0.96640
+2022-07-06 15:43:01,759:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:43:35,327:INFO:Number of total generated pseudo labels: 7398
+2022-07-06 15:43:35,327:INFO:Number of correct pseudo labels: 4169
+2022-07-06 15:43:35,327:INFO:Pseudo Labels Accuracy: 4169 / 7398 = 0.5635306839686401 
+2022-07-06 15:43:35,328:INFO:Number of total training examples are: 7608
+2022-07-06 15:44:12,925:INFO:[ Train | 024/030 ] loss = 0.11953, acc = 0.95829
+2022-07-06 15:44:12,926:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:44:46,299:INFO:Number of total generated pseudo labels: 7290
+2022-07-06 15:44:46,300:INFO:Number of correct pseudo labels: 4178
+2022-07-06 15:44:46,300:INFO:Pseudo Labels Accuracy: 4178 / 7290 = 0.573113854595336 
+2022-07-06 15:44:46,301:INFO:Number of total training examples are: 7500
+2022-07-06 15:45:23,478:INFO:[ Train | 025/030 ] loss = 0.09985, acc = 0.96777
+2022-07-06 15:45:23,479:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:45:57,299:INFO:Number of total generated pseudo labels: 7315
+2022-07-06 15:45:57,300:INFO:Number of correct pseudo labels: 4253
+2022-07-06 15:45:57,300:INFO:Pseudo Labels Accuracy: 4253 / 7315 = 0.5814080656185919 
+2022-07-06 15:45:57,375:INFO:Number of total training examples are: 7525
+2022-07-06 15:46:34,572:INFO:[ Train | 026/030 ] loss = 0.09150, acc = 0.97047
+2022-07-06 15:46:34,573:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:47:07,971:INFO:Number of total generated pseudo labels: 7078
+2022-07-06 15:47:07,971:INFO:Number of correct pseudo labels: 4377
+2022-07-06 15:47:07,971:INFO:Pseudo Labels Accuracy: 4377 / 7078 = 0.6183950268437411 
+2022-07-06 15:47:07,973:INFO:Number of total training examples are: 7288
+2022-07-06 15:47:44,887:INFO:[ Train | 027/030 ] loss = 0.15921, acc = 0.94540
+2022-07-06 15:47:44,888:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:48:18,683:INFO:Number of total generated pseudo labels: 7169
+2022-07-06 15:48:18,683:INFO:Number of correct pseudo labels: 4403
+2022-07-06 15:48:18,683:INFO:Pseudo Labels Accuracy: 4403 / 7169 = 0.6141721300041847 
+2022-07-06 15:48:18,725:INFO:Number of total training examples are: 7379
+2022-07-06 15:48:57,652:INFO:[ Train | 028/030 ] loss = 0.11315, acc = 0.96198
+2022-07-06 15:48:57,653:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:49:31,480:INFO:Number of total generated pseudo labels: 7229
+2022-07-06 15:49:31,480:INFO:Number of correct pseudo labels: 4480
+2022-07-06 15:49:31,480:INFO:Pseudo Labels Accuracy: 4480 / 7229 = 0.6197261031954627 
+2022-07-06 15:49:31,481:INFO:Number of total training examples are: 7439
+2022-07-06 15:50:08,576:INFO:[ Train | 029/030 ] loss = 0.10162, acc = 0.96402
+2022-07-06 15:50:08,577:INFO:Generating pseudo labels for next epoch...
+2022-07-06 15:50:42,311:INFO:Number of total generated pseudo labels: 7117
+2022-07-06 15:50:42,311:INFO:Number of correct pseudo labels: 4459
+2022-07-06 15:50:42,311:INFO:Pseudo Labels Accuracy: 4459 / 7117 = 0.6265280314739357 
+2022-07-06 15:50:42,312:INFO:Number of total training examples are: 7327
+2022-07-06 15:51:18,653:INFO:[ Train | 030/030 ] loss = 0.12897, acc = 0.95182
+2022-07-06 15:51:18,654:INFO: Starting test
+2022-07-06 15:51:25,330:INFO: [Test ] loss = 2.32304, acc = 0.62695

@@ -169,25 +169,27 @@ for epoch in range(TRAIN_EPOCHS):
 
 
 # Plot Training Loss
+plt.rcParams["figure.figsize"] = [12.50, 7.50]
 plt.plot(range(1, TRAIN_EPOCHS + 1), loss_values)
 plt.plot(range(1, TRAIN_EPOCHS + 1), acc_values)
 plt.xticks(range(1, TRAIN_EPOCHS + 1))
 plt.title("Training Loss and Accuracy")
-plt.xlabel("Epochs")
+plt.xlabel("Epochs", labelpad=20)
 plt.ylabel("Training Loss and Accuracy")
 plt.legend(['Loss', 'Accuracy'], loc='upper right')
 plt.savefig(OUTPUT_DIR + '/loss_accuracy.png')
-plt.show()
+plt.close()
 if len(new_labels) and len(new_correct) > 0:
     # Plot labels
     plt.plot(range(1, len(new_labels)+1), new_labels)
     plt.plot(range(1, len(new_correct)+1), new_correct)
     plt.xticks(range(1, len(new_labels)+1))
     plt.title("Number of new/correct pseudo labels")
-    plt.xlabel("Count of Epochs at which new labels are generated")
+    plt.xlabel("Count of Epochs at which new labels are generated", labelpad=7)
     plt.ylabel("Labels count")
     plt.legend(['New Labels Generated', 'Correct Labels'], loc='upper left')
     plt.savefig(OUTPUT_DIR + '/pseudo_labels.png')
+    plt.close()
 # Testing the model
 print("Starting test")
 logging.info(" Starting test")
